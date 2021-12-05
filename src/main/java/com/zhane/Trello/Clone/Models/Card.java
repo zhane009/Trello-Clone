@@ -3,6 +3,8 @@ package com.zhane.Trello.Clone.Models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -19,7 +21,6 @@ public class Card {
     @JoinColumn(name = "list_id", nullable = false)
     @JsonIgnoreProperties("cards")
     private List list;
-
 
     public long getId() {
         return id;
@@ -68,4 +69,12 @@ public class Card {
     public void setList(List list) {
         this.list = list;
     }
+
+//    public java.util.List<Checklist> getChecklists() {
+//        return checklists;
+//    }
+//
+//    public void setChecklists(java.util.List<Checklist> checklists) {
+//        this.checklists = checklists;
+//    }
 }
