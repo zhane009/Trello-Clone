@@ -15,6 +15,7 @@ public class Checklist {
     private String title;
     private String item;
     private short position;
+    private short checked = 0;
 
     public long getId() {
         return id;
@@ -48,19 +49,19 @@ public class Checklist {
         this.position = position;
     }
 
-//    public Card getCard() {
-//        return card;
-//    }
-//
-//    public void setCard(Card card) {
-//        this.card = card;
-//    }
-
     public long getCardId() {
         return cardId;
     }
 
-    public void setCard_id(long cardId) {
+    public void setCardId(long cardId) {
         this.cardId = cardId;
+    }
+
+    public short getChecked() {
+        return checked;
+    }
+
+    public void setChecked(short checked) {
+        this.checked = checked;
     }
 }

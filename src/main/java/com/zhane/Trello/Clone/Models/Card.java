@@ -17,6 +17,23 @@ public class Card {
     private int position;
     private int status = 1;
 
+    @ManyToMany
+    @JoinTable(
+            name = "account_member",
+            joinColumns = @JoinColumn(name ="card_id"),
+            inverseJoinColumns = @JoinColumn(name = "account_username")
+    )
+    private Set<Account> members;
+
+    @ManyToMany
+    @JoinTable(
+            name = "card_label",
+            joinColumns = @JoinColumn(name = "card_id"),
+            inverseJoinColumns = @JoinColumn(name = "label_id")
+    )
+    private Set<Label> labels;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "list_id", nullable = false)
     @JsonIgnoreProperties("cards")

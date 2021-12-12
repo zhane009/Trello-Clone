@@ -11,28 +11,11 @@ import java.util.List;
 public class Account {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     private String username;
     private String name;
     private String email;
     private Date dob;
     private short verified = 0;
-
-//    @ManyToMany
-//    @JoinTable(
-//            joinColumns = @JoinColumn(name = "list_id"),
-//            inverseJoinColumns = @JoinColumn(name = "account_id")
-//    )
-//    private List<com.zhane.Trello.Clone.Models.List> lists;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
