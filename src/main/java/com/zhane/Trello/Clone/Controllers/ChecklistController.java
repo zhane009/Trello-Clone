@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -27,16 +28,17 @@ public class ChecklistController {
         return checklistRepository.saveAndFlush(oldChecklist);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
-    public void deleteById(@PathVariable long id){
-        checklistRepository.deleteById(id);
-    }
-
-//    @PostMapping("{cardId}")
-//    public List<Checklist> getByCardId(@PathVariable long cardId){
-//        return checklistRepository.findByCardId(cardId);
+//    @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
+//    public void deleteById(@PathVariable long id){
+//        checklistRepository.deleteById(id);
 //    }
 
+    @GetMapping("{cardId}")
+    public List<Checklist> getByCardId(@PathVariable long cardId){
+        return checklistRepository.findByCardId(cardId);
+    }
+
+    @Transactional
     @RequestMapping(method = RequestMethod.DELETE, value = "{cardId}")
     public void deleteByCardId(@PathVariable long cardId){
         checklistRepository.deleteByCardId(cardId);

@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -21,9 +22,9 @@ public class AccountController {
         return accountRepository.findAll();
     }
 
-    @GetMapping("{id}")
-    public Account getById(@PathVariable long id){
-        return accountRepository.getOne(id);
+    @GetMapping("{username}")
+    public Account getById(@PathVariable String username){
+        return accountRepository.findByUsername(username);
     }
 
     @PostMapping
@@ -33,13 +34,14 @@ public class AccountController {
 
     @RequestMapping(method = RequestMethod.PUT)
     public Account update(@RequestBody Account account){
-        Account oldAccount = accountRepository.getOne(account.getId());
+        Account oldAccount = accountRepository.findByUsername(account.getUsername());
         BeanUtils.copyProperties(account, oldAccount, "verified");
         return accountRepository.saveAndFlush(oldAccount);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
-    public void deleteById(@PathVariable long id){
-        accountRepository.deleteById(id);
+    @Transactional
+    @RequestMapping(method = RequestMethod.DELETE, value = "{username}")
+    public void deleteById(@PathVariable String username){
+        accountRepository.deleteByUsername(username);
     }
 }
