@@ -19,7 +19,7 @@ public class Card {
 
     @ManyToMany
     @JoinTable(
-            name = "account_member",
+            name = "card_member",
             joinColumns = @JoinColumn(name ="card_id"),
             inverseJoinColumns = @JoinColumn(name = "account_username")
     )
@@ -38,6 +38,15 @@ public class Card {
     @JoinColumn(name = "list_id", nullable = false)
     @JsonIgnoreProperties("cards")
     private List list;
+
+    @OneToMany(
+            mappedBy = "cardId",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.REMOVE
+    )
+    @OrderBy("position asc")
+    private java.util.List<Checklist> checklists;
+
 
     public long getId() {
         return id;
@@ -87,11 +96,27 @@ public class Card {
         this.list = list;
     }
 
-//    public java.util.List<Checklist> getChecklists() {
-//        return checklists;
-//    }
-//
-//    public void setChecklists(java.util.List<Checklist> checklists) {
-//        this.checklists = checklists;
-//    }
+    public Set<Account> getMembers() {
+        return members;
+    }
+
+    public void setMembers(Set<Account> members) {
+        this.members = members;
+    }
+
+    public Set<Label> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(Set<Label> labels) {
+        this.labels = labels;
+    }
+
+    public java.util.List<Checklist> getChecklists() {
+        return checklists;
+    }
+
+    public void setChecklists(java.util.List<Checklist> checklists) {
+        this.checklists = checklists;
+    }
 }

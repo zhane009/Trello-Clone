@@ -1,5 +1,6 @@
 package com.zhane.Trello.Clone.Controllers;
 
+import com.zhane.Trello.Clone.Models.Card;
 import com.zhane.Trello.Clone.Models.List;
 import com.zhane.Trello.Clone.Repositories.CardRepository;
 import com.zhane.Trello.Clone.Repositories.ListRepository;
@@ -7,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
@@ -44,6 +47,13 @@ public class ListController {
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public void deleteById(@PathVariable long id){
         listRepository.deleteById(id);
+    }
+
+    @PostMapping(value = "change-status")
+    public List changeStatus(@RequestBody Map<String,Long> payload){
+        List list = listRepository.getOne(payload.get("listId"));
+        list.setStatus(Integer.parseInt(payload.get("status").toString()));
+        return listRepository.saveAndFlush(list);
     }
 
 

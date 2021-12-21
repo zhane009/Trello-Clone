@@ -1,5 +1,6 @@
 package com.zhane.Trello.Clone.Controllers;
 
+import com.zhane.Trello.Clone.Models.Card;
 import com.zhane.Trello.Clone.Models.Checklist;
 import com.zhane.Trello.Clone.Repositories.ChecklistRepository;
 import org.springframework.beans.BeanUtils;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -28,25 +30,29 @@ public class ChecklistController {
         return checklistRepository.saveAndFlush(oldChecklist);
     }
 
-//    @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
-//    public void deleteById(@PathVariable long id){
-//        checklistRepository.deleteById(id);
-//    }
+    @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
+    public void deleteById(@PathVariable long id){
+        checklistRepository.deleteById(id);
+    }
 
     @GetMapping("{cardId}")
     public List<Checklist> getByCardId(@PathVariable long cardId){
         return checklistRepository.findByCardId(cardId);
     }
 
-    @Transactional
-    @RequestMapping(method = RequestMethod.DELETE, value = "{cardId}")
-    public void deleteByCardId(@PathVariable long cardId){
-        checklistRepository.deleteByCardId(cardId);
-    }
-
     @PostMapping("{cardId}")
     public List<Checklist> saveAll(@RequestBody List<Checklist> checklists){
         return checklistRepository.saveAll(checklists);
     }
+
+    @PostMapping(value = "checked")
+    public Checklist changeChecked(@RequestBody Map<String, Long> payload){
+        Checklist checklist = checklistRepository.getOne(payload.get("checklistId"));
+        Short checked = Short.parseShort(payload.get("checked").toString());
+        checklist.setChecked(checked);
+        return checklistRepository.saveAndFlush(checklist);
+    }
+
+
 
 }
