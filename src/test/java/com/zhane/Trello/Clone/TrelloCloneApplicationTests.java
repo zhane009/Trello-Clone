@@ -9,5 +9,4 @@ class TrelloCloneApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
