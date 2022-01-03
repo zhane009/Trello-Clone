@@ -1,6 +1,8 @@
 package com.zhane.Trello.Clone.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,6 +18,16 @@ public class Account {
     private String email;
     private Date dob;
     private short verified = 0;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @Column(name = "date_created", updatable = false)
+    private Date dateCreated;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
+    @Column(name = "last_updated")
+    private Date lastUpdated;
 
     public String getUsername() {
         return username;
@@ -55,5 +67,21 @@ public class Account {
 
     public void setVerified(short verified) {
         this.verified = verified;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }

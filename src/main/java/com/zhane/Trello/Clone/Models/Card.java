@@ -1,8 +1,11 @@
 package com.zhane.Trello.Clone.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +19,16 @@ public class Card {
     private String description;
     private int position;
     private int status = 1;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @Column(name = "date_created", updatable = false)
+    private Date dateCreated;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
+    @Column(name = "last_updated")
+    private Date lastUpdated;
 
     @ManyToMany
     @JoinTable(
@@ -118,5 +131,21 @@ public class Card {
 
     public void setChecklists(java.util.List<Checklist> checklists) {
         this.checklists = checklists;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }
