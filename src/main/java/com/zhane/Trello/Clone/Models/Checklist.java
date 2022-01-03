@@ -1,5 +1,6 @@
 package com.zhane.Trello.Clone.Models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -24,11 +25,13 @@ public class Checklist {
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     @Column(name = "date_created", updatable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date dateCreated;
 
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     @Column(name = "last_updated")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastUpdated;
 
     public long getId() {
